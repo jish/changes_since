@@ -13,6 +13,7 @@ class ChangesSince::ChangelogPrinter
     else
       print_commits!(@commits)
     end
+    return
   end
 
   def print_team_commits!
