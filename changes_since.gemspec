@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "changes_since"
-  s.version     = "0.0.1"
+  s.version     = "0.0.2"
   s.summary     = "Git Changes since a tag"
   s.date        = "2014-04-07"
   s.description = "Shows you all the merged pull requests since a certain git tag in a nice format"
