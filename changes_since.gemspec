@@ -6,7 +6,8 @@ Gem::Specification.new do |s|
   s.description = "Shows you all the merged pull requests since a certain git tag in a nice format"
   s.authors     = ["Ashwin Hegde"]
   s.email       = ["ahegde@zendesk.com"]
-  s.files       = ["lib/changes_since.rb"]
+  s.files       = Dir['lib/**/*']
+  s.test_files  = Dir['test/**/*']
   s.homepage    = 'http://rubygems.org/gems/changes_since'
   s.license     = 'MIT'
 end

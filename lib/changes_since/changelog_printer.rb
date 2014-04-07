@@ -1,5 +1,5 @@
 class ChangesSince::ChangelogPrinter
-  attr_reader :commits, :teams, :options
+  attr_reader :teams, :options
 
   def initialize(commits, teams, options)
     @commits = commits
@@ -8,7 +8,7 @@ class ChangesSince::ChangelogPrinter
   end
 
   def print!
-    if @teams
+    if teams
       print_team_commits!
     else
       print_all_commits!
@@ -16,27 +16,26 @@ class ChangesSince::ChangelogPrinter
   end
 
   def print_team_commits!
-    @teams.each do |team, members|
+    teams.each do |team, members|
       author_re = /#{members.join("|")}/i
-      team_commits = commits.select do |commit|
+      team_commits = @commits.select do |commit|
         [commit.author.name, commit.author.email].any? do |str|
           str =~ author_re
         end
       end
       next if team_commits.empty?
-      commits -= team_commits
+      @commits -= team_commits
       puts "\n*#{team}*\n"
       print_commits!(team_commits)
     end
 
-    return if commits.empty?
+    return if @commits.empty?
     puts "\n*Other*\n\n"
-    commits.each { |commit| print_message(commit, nil, options) }
+    @commits.each { |commit| print_message(commit, nil, options) }
   end
 
   def print_commits!(output_commits)
     output_commits.sort! { |a, b| a.author.name <=> b.author.name }
-    puts "\n*#{team}*\n"
     {
       public: 'Public',
       bug: 'Bugs',

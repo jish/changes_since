@@ -51,5 +51,6 @@ class ChangesSince::CommitParser
         end
       end
     end
+    commits
   end
 end

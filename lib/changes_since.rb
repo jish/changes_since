@@ -15,3 +15,6 @@ class ChangesSince
     printer.print!
   end
 end
+
+require 'changes_since/commit_parser'
+require 'changes_since/changelog_printer'
