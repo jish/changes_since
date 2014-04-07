@@ -8,7 +8,7 @@ require 'optparse'
 require 'set'
 
 class ChangesSince
-  def self.fetch(tag, options, teams=nil)
+  def self.fetch(tag, options={}, teams=nil)
     parser  = CommitParser.new(tag, options)
     commits = parser.parse
     printer = ChangelogPrinter.new(commits, teams, options)

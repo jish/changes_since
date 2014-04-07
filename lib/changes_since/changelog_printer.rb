@@ -11,7 +11,7 @@ class ChangesSince::ChangelogPrinter
     if teams
       print_team_commits!
     else
-      print_all_commits!
+      print_commits!(@commits)
     end
   end
 
