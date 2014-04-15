@@ -2,8 +2,8 @@ class ChangesSince::CommitParser
   attr_reader :log, :options
 
   def initialize(tag, options)
-    git  = Git.open(Dir.pwd)
-    @log = git.log(100000).between(tag)
+    git   = Git.open(Dir.pwd)
+    @log  = git.log(100000).between(tag)
     @options = options
   end
 
