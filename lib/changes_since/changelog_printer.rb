@@ -34,7 +34,7 @@ class ChangesSince::ChangelogPrinter
       next if team_commits.empty?
       @commits -= team_commits
       if options[:markdown]
-        puts "||*#{team}*||Author||PR||"
+        puts "||*#{team}*||Author||PR||#{"Commit" if options[:sha]}"
       else
         puts "\n*#{team}*\n"
       end
@@ -75,11 +75,14 @@ class ChangesSince::ChangelogPrinter
     end
     title.gsub!("##{type}", "") if type
     branch_author = commit.author.name
+    sha = commit.sha[0..9] if options[:sha]
     if options[:markdown]
-      text = "|#{title}|#{branch_author}|"
-      text << "[##{pr}|#{@repo}/pulls/#{pr}]|" if @repo
+      text = "|#{title}|"
+      text << "#{branch_author}|"
+      text << "[##{pr}|#{@repo}/pull/#{pr}]|" if @repo
+      text << "[#{sha}|#{@repo}/commit/#{sha}]|" if sha
     else
-      text = "* #{title} (#{branch_author})"
+      text = "* #{title} (#{branch_author}) #{options[:sha] ? commit.sha[0..9] : ''}"
     end
     puts text
   end
