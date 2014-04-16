@@ -114,5 +114,19 @@ class ChangelogPrinterTest < Test::Unit::TestCase
         printer.print_commits!(commits)
       end
     end
+
+    context "print_team_name" do
+      should "print the team name" do
+        printer = ChangesSince::ChangelogPrinter.new(stub, stub, {}, stub)
+        printer.expects(:puts).with("\n*abc*\n")
+        printer.print_team_name("abc")
+      end
+
+      should "print the team name with markdown" do
+        printer = ChangesSince::ChangelogPrinter.new(stub, stub, { :markdown => true }, stub)
+        printer.expects(:puts).with("||*abc*||Author||PR||")
+        printer.print_team_name("abc")
+      end
+    end
   end
 end
