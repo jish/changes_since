@@ -33,17 +33,21 @@ class ChangesSince::ChangelogPrinter
       end
       next if team_commits.empty?
       @commits -= team_commits
-      if options[:markdown]
-        puts "||*#{team}*||Author||PR||#{"Commit" if options[:sha]}"
-      else
-        puts "\n*#{team}*\n"
-      end
+      print_team_name(team)
       print_commits!(team_commits)
     end
 
     return if @commits.empty?
-    puts "\n*Other*\n\n"
-    @commits.each { |commit| print_message(commit, nil) }
+    print_team_name("Other")
+    print_commits!(@commits)
+  end
+
+  def print_team_name(name)
+    if options[:markdown]
+      puts "||*#{name}*||Author||PR||#{"Commit" if options[:sha]}"
+    else
+      puts "\n*#{name}*\n"
+    end
   end
 
   def print_commits!(output_commits)
@@ -62,10 +66,10 @@ class ChangesSince::ChangelogPrinter
       puts "\nUnclassified:\n\n"
     end
 
-    output_commits.each { |commit| print_message(commit, nil) }
+    output_commits.each { |commit| print_message(commit) }
   end
 
-  def print_message(commit, type)
+  def print_message(commit, tag=nil)
     message_lines = commit.message.split("\n\n")
     if message_lines.first =~ /Merge pull request/
       title = message_lines.last
@@ -73,7 +77,7 @@ class ChangesSince::ChangelogPrinter
     else
       title = message_lines.first
     end
-    title.gsub!("##{type}", "") if type
+    title.gsub!("##{tag}", "") if tag
     branch_author = commit.author.name
     sha = commit.sha[0..9] if options[:sha]
     if options[:markdown]
