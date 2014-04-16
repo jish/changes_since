@@ -1,13 +1,8 @@
-#!/usr/bin/env ruby
-
-# Usage: To get all merged pull requests since v1.37.0
-#        script/changes_since v1.37.0
-
 require 'git'
 require 'optparse'
 require 'set'
 
-class ChangesSince
+module ChangesSince
   def self.fetch(tag, teams=nil, repo=nil)
     options = parse_options
     parser  = CommitParser.new(tag, options)
