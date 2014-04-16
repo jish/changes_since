@@ -109,8 +109,17 @@ class ChangelogPrinterTest < Test::Unit::TestCase
         commits = stub_commits
         options = { :tags => true }
         printer = ChangesSince::ChangelogPrinter.new(commits, stub, options, stub)
-        untagged_commits = commits.select { |commit| !commit.message =~/[public|bug|internal]/ }
+        tagged_commits = commits.select { |commit| commit.message =~ /public|bug|internal/ }
+        tagged_commits.each { |commit|
+          tag = commit.message.slice(commit.message.index("#") + 1, commit.message.length).to_sym
+          printer.expects(:print_message).with(commit, tag)
+        }
+        untagged_commits = commits - tagged_commits
         untagged_commits.each { |commit| printer.expects(:print_message).with(commit) }
+        printer.expects(:puts).with("\nPublic:\n\n")
+        printer.expects(:puts).with("\nBugs:\n\n")
+        printer.expects(:puts).with("\nInternal:\n\n")
+        printer.expects(:puts).with("\nUnclassified:\n\n")
         printer.print_commits!(commits)
       end
     end
@@ -127,6 +136,15 @@ class ChangelogPrinterTest < Test::Unit::TestCase
         printer.expects(:puts).with("||*abc*||Author||PR||")
         printer.print_team_name("abc")
       end
+
+      should "print the team name with markdown and risks" do
+        printer = ChangesSince::ChangelogPrinter.new(stub, stub, { :markdown => true, :risks => true }, stub)
+        printer.expects(:puts).with("||*abc*||Author||PR||Risks||")
+        printer.print_team_name("abc")
+      end
+    end
+
+    context "print_message" do
     end
   end
 end

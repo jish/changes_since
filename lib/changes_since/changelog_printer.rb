@@ -44,7 +44,10 @@ class ChangesSince::ChangelogPrinter
 
   def print_team_name(name)
     if options[:markdown]
-      puts "||*#{name}*||Author||PR||#{"Commit" if options[:sha]}"
+      row = "||*#{name}*||Author||PR||"
+      row << "Commit||" if options[:sha]
+      row << "Risks||" if options[:risks]
+      puts row
     else
       puts "\n*#{name}*\n"
     end
@@ -76,17 +79,18 @@ class ChangesSince::ChangelogPrinter
       pr    = message_lines.first.split(" from ").first.split("#").last
     else
       title = message_lines.first
+      sha   = options[:sha] ? commit.sha[0..9] : ''
     end
     title.gsub!("##{tag}", "") if tag
     branch_author = commit.author.name
-    sha = commit.sha[0..9] if options[:sha]
     if options[:markdown]
       text = "|#{title}|"
       text << "#{branch_author}|"
-      text << "[##{pr}|#{@repo}/pull/#{pr}]|" if @repo
+      text << "[##{pr}|#{@repo}/pull/#{pr}]|" if @repo && pr
       text << "[#{sha}|#{@repo}/commit/#{sha}]|" if sha
+      text << "|" if options[:risks]
     else
-      text = "* #{title} (#{branch_author}) #{options[:sha] ? commit.sha[0..9] : ''}"
+      text = "* #{title} (#{branch_author})"
     end
     puts text
   end
