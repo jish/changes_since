@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hashwin/changes_since.svg?branch=master)](https://travis-ci.org/hashwin/changes_since)
+
 changes_since
 =============
 A Changelog tool that helps you display a neat changelog of all pull requests merged since a certain tag.
