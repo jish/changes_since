@@ -89,7 +89,7 @@ module ChangesSince
         text << "#{branch_author}|"
         text << "[##{pr}|#{@repo}/pull/#{pr}]|" if @repo && pr
         text << "[#{sha}|#{@repo}/commit/#{sha}]|" if sha
-        text << "|" if options[:risk]
+        text << " |" if options[:risk]
       else
         text = "* #{title} (#{branch_author})"
       end

@@ -170,7 +170,7 @@ class ChangelogPrinterTest < Test::Unit::TestCase
         should "allow a column for risk" do
           printer = ChangesSince::ChangelogPrinter.new(stub, stub, { :markdown => true, :risk => true }, "repo")
           commit  = stub(:author => stub(:name => "NAME"), :message => "MESSAGE", :sha => "123")
-          printer.expects(:puts).with('|MESSAGE|NAME|[|repo/commit/]||')
+          printer.expects(:puts).with('|MESSAGE|NAME|[|repo/commit/]| |')
           printer.print_message(commit)
         end
       end
