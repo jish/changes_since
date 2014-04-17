@@ -138,13 +138,42 @@ class ChangelogPrinterTest < Test::Unit::TestCase
       end
 
       should "print the team name with markdown and risks" do
-        printer = ChangesSince::ChangelogPrinter.new(stub, stub, { :markdown => true, :risks => true }, stub)
-        printer.expects(:puts).with("||*abc*||Author||PR||Risks||")
+        printer = ChangesSince::ChangelogPrinter.new(stub, stub, { :markdown => true, :risk => true }, stub)
+        printer.expects(:puts).with("||*abc*||Author||PR||Risk||")
         printer.print_team_name("abc")
       end
     end
 
     context "print_message" do
+      should "print out the title and branch author" do
+        printer = ChangesSince::ChangelogPrinter.new(stub, stub, {}, stub)
+        commit  = stub(:author => stub(:name => "NAME"), :message => "MESSAGE")
+        printer.expects(:puts).with("* MESSAGE (NAME)")
+        printer.print_message(commit)
+      end
+
+      context "with markdown" do
+        should "print out the title, branch author and PR" do
+          printer = ChangesSince::ChangelogPrinter.new(stub, stub, { :markdown => true }, "repo")
+          commit  = stub(:author => stub(:name => "NAME"), :message => "MESSAGE")
+          printer.expects(:puts).with('|MESSAGE|NAME|[|repo/commit/]|')
+          printer.print_message(commit)
+        end
+
+        should "print out the title, branch author PR and sha" do
+          printer = ChangesSince::ChangelogPrinter.new(stub, stub, { :markdown => true, :sha => true }, "repo")
+          commit  = stub(:author => stub(:name => "NAME"), :message => "MESSAGE", :sha => "123")
+          printer.expects(:puts).with('|MESSAGE|NAME|[123|repo/commit/123]|')
+          printer.print_message(commit)
+        end
+
+        should "allow a column for risk" do
+          printer = ChangesSince::ChangelogPrinter.new(stub, stub, { :markdown => true, :risk => true }, "repo")
+          commit  = stub(:author => stub(:name => "NAME"), :message => "MESSAGE", :sha => "123")
+          printer.expects(:puts).with('|MESSAGE|NAME|[|repo/commit/]||')
+          printer.print_message(commit)
+        end
+      end
     end
   end
 end

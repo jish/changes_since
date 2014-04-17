@@ -47,7 +47,7 @@ module ChangesSince
       if options[:markdown]
         row = "||*#{name}*||Author||PR||"
         row << "Commit||" if options[:sha]
-        row << "Risks||" if options[:risks]
+        row << "Risk||" if options[:risk]
         puts row
       else
         puts "\n*#{name}*\n"
@@ -89,7 +89,7 @@ module ChangesSince
         text << "#{branch_author}|"
         text << "[##{pr}|#{@repo}/pull/#{pr}]|" if @repo && pr
         text << "[#{sha}|#{@repo}/commit/#{sha}]|" if sha
-        text << "|" if options[:risks]
+        text << "|" if options[:risk]
       else
         text = "* #{title} (#{branch_author})"
       end
