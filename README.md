@@ -24,7 +24,7 @@ From https://github.com/resque/resque
 ...
 ```
 If you want to use enhanced functionality, you can tag pull requests with #bug, #internal, or #public
-The 'Unclassified' would then change to Bug, Internal or Public respectively.
+The 'Unclassified' would then change to Bug, Internal or Public respectively, adding the option :tags => true.
 
 There are some additional options you can use
 
