@@ -63,7 +63,6 @@ Example:
 
 *Team 2*
 
-
 * update readme.md with hooks link (Ryan Biesemeyer)
 * speed up test suite (Ryan Biesemeyer)
 * add info about queue priority to readme (Ryan Biesemeyer)
