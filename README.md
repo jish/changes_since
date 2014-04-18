@@ -11,8 +11,6 @@ From https://github.com/resque/resque
 
 `ChangesSince.fetch('v1.25.2')`
 ```
-Unclassified:
-
 * won't be needing rack-test as well (Dan Buch)
 * Extracted a new WorkerQueueList class out of Rescue::Worker (Einar Jonsson)
 * implementation of Backend connection with Hash (Ryan Biesemeyer)
@@ -34,8 +32,6 @@ Author filter:
 
 `ChangesSince.fetch('v1.25.2', { :author_filter => ["Dan Buch", "Steve Klabnik"] })`
 ```
-Unclassified:
-
 * won't be needing rack-test as well (Dan Buch)
 * Fixed typos (Steve Klabnik)
 * Make sure the filicide is justified (Steve Klabnik)
@@ -62,14 +58,11 @@ Example:
 ```
 *Team 1*
 
-Unclassified:
-
 * won't be needing rack-test as well (Dan Buch)
 * Extracted a new WorkerQueueList class out of Rescue::Worker (Einar Jonsson)
 
 *Team 2*
 
-Unclassified:
 
 * update readme.md with hooks link (Ryan Biesemeyer)
 * speed up test suite (Ryan Biesemeyer)
